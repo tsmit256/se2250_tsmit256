@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ResetPosition : MonoBehaviour
 {
-    private Vector3 originalPosition;
-    private Quaternion originalRotation;
+    public Vector3 originalPosition;
+    public Quaternion originalRotation;
     public Rigidbody rb;
 
     // Start is called before the first frame update

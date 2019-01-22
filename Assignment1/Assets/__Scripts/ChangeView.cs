@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ChangeView : MonoBehaviour
 {
-    private Vector3 camSidePosition;
-    private Vector3 camTopPosition;
-    private Quaternion camSideRotationVal;
-    private Quaternion camTopRotationVal;
+    public Vector3 camSidePosition;
+    public Vector3 camTopPosition;
+    public Quaternion camSideRotationVal;
+    public Quaternion camTopRotationVal;
 
     // Start is called before the first frame update
     void Start()

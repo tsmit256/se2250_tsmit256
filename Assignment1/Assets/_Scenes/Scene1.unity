@@ -710,7 +710,7 @@ PrefabInstance:
     - target: {fileID: 3285635244528530398, guid: a01af92fd1c29c246bf8fd2e0ee6d1b7,
         type: 3}
       propertyPath: m_Name
-      value: Box
+      value: Container
       objectReference: {fileID: 0}
     - target: {fileID: 3285635244528530393, guid: a01af92fd1c29c246bf8fd2e0ee6d1b7,
         type: 3}
