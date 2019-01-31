@@ -18,9 +18,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     { 
+        //Receive input from arrow keys (or awsd)
         float moveVert = Input.GetAxisRaw("Vertical");
         float moveHorz = Input.GetAxisRaw("Horizontal");
 
+        //Apply commands to a force on object
         Vector3 move = new Vector3(moveHorz, 0, moveVert);
         rb.AddForce(move * speed);
     }
