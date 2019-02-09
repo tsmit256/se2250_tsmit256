@@ -5,14 +5,20 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    //Declaring gameObject's rigidbody
     private Rigidbody _rb;
-
     public Material colourBlueLight, colourGrey, colourYellow;
-
     public float speed = 5;
     public int score = 0;
     public Text scoreText;
+
+    //Property - material of gameObject
+    private string _matName;
+    public string MatName
+    {
+        get { return _matName; }
+        set { _matName = value; }
+    }
+    
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +31,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    // Update is called once per frame
     void FixedUpdate()
     { 
         //Receive input from arrow keys (or awsd)
@@ -45,16 +50,19 @@ public class PlayerController : MonoBehaviour
             //Deactivates pick up object when collision occurs
             other.gameObject.SetActive(false);
 
+            //Sets MatColour Property to be color of other gameobject
+            MatName = other.gameObject.GetComponent<Renderer>().material.name;
+
             //Increment Score (based on property name of material defined in "PickUpCreator" script)
-            if (other.gameObject.GetComponent<Renderer>().material.name == "Yellow")
+            if (MatName == "Yellow")
             {
                 score = score + 3;
             }
-            else if (other.gameObject.GetComponent<Renderer>().material.name == "Light Blue")
+            else if (MatName == "Light Blue")
             {
                 score = score + 2;
             }
-            else if (other.gameObject.GetComponent<Renderer>().material.name == "Grey")
+            else if (MatName == "Grey")
             {
                 score++;
             }
