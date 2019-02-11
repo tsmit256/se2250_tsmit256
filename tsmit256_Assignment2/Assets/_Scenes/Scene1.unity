@@ -126,7 +126,6 @@ GameObject:
   - component: {fileID: 17805866}
   - component: {fileID: 17805865}
   - component: {fileID: 17805864}
-  - component: {fileID: 17805869}
   m_Layer: 0
   m_Name: Container
   m_TagString: Untagged
@@ -218,25 +217,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 0.5, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &17805869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17805862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84fb3e5c6770bcd45a0c4c7030369827, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cubePrefabVar: {fileID: 7605017294017475368, guid: c6cd914b038ced64b80ff18c81044775,
-    type: 3}
-  pickUpObjParent: {fileID: 1872080125}
-  colourBlueLight: {fileID: 2100000, guid: ef4a9deea356a8944987a481ea2c745d, type: 2}
-  colourGrey: {fileID: 2100000, guid: 5eb977578510f4c418fc606a95798425, type: 2}
-  colourYellow: {fileID: 2100000, guid: 34029d645e6720249b9f6c77f2b933b2, type: 2}
-  maxNumCubes: 8
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +297,7 @@ GameObject:
   - component: {fileID: 534669905}
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
+  - component: {fileID: 534669906}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -388,6 +369,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!114 &534669906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fb3e5c6770bcd45a0c4c7030369827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefabVar: {fileID: 7605017294017475368, guid: c6cd914b038ced64b80ff18c81044775,
+    type: 3}
+  pickUpObjParent: {fileID: 1872080125}
+  colourBlueLight: {fileID: 2100000, guid: ef4a9deea356a8944987a481ea2c745d, type: 2}
+  colourGrey: {fileID: 2100000, guid: 5eb977578510f4c418fc606a95798425, type: 2}
+  colourYellow: {fileID: 2100000, guid: 34029d645e6720249b9f6c77f2b933b2, type: 2}
+  maxNumCubes: 8
 --- !u!1 &658750955
 GameObject:
   m_ObjectHideFlags: 0
