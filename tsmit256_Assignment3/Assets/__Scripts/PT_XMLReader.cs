@@ -3,44 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-/*
-<xml>
-	<jeremy age="36">
-		<friend name="Harrison">
-			"Hello"
-		</friend>
-	</jeremy>
-</xml>
-
-
-XMLHashtable xml;
-xml["jeremy"][0]["friend"][0].text
-xml["jeremy"][0].att("age");
-*/
-
-
 
 [System.Serializable]
 public class PT_XMLReader
 {
     static public bool SHOW_COMMENTS = false;
 
-    //public string input;
-    //public TextAsset inputTA;
     public string xmlText;
     public PT_XMLHashtable xml;
-
-    /*
-	void Awake() {
-		inputTA = Resources.Load("WellFormedSample") as TextAsset;	
-		input = inputTA.text;
-		print(input);
-		output = new XMLHashtable();
-		Parse(input, output);
-		// TODO: Make something which will trace a Hashtable or output it as XML
-		print(output["videocollection"][0]["video"][1]["title"][0].text);
-	}
-	*/
 
     // This function creates a new XMLHashtable and calls the real Parse()
     public void Parse(string eS)
@@ -149,7 +119,6 @@ public class PT_XMLReader
             atts = atts.Trim();
             eqNdx = atts.IndexOf("=");
             if (eqNdx == -1) break;
-            //att = "@"+atts.Substring(0,eqNdx);
             att = atts.Substring(0, eqNdx);
             spNdx = atts.IndexOf(" ", eqNdx);
             if (spNdx == -1)
@@ -167,8 +136,7 @@ public class PT_XMLReader
                 atts = atts.Substring(spNdx);
             }
             val = val.Trim('\"');
-            //thisHash[att] = val; // All attributes have to be unique, so this should be okay.
-            thisHash.attSet(att, val);
+            thisHash.AttSet(att, val);
         }
 
 
@@ -181,7 +149,6 @@ public class PT_XMLReader
         { // This is a multiline tag (e.g. <tag> ....  </tag>)
           // find the closing tag
             int close = eS.IndexOf("</" + tag + ">");
-            // TODO: Should this do something more if there is no closing tag?
             if (close == -1)
             {
                 Debug.Log("XMLReader ERROR: XML not well formed. Closing tag </" + tag + "> missing.");
@@ -303,14 +270,14 @@ public class PT_XMLHashtable
         }
     }
 
-    public string att(string attKey)
+    public string Att(string attKey)
     {
         int ndx = AttIndex(attKey);
         if (ndx == -1) return ("");
         return (attributesList[ndx]);
     }
 
-    public void attSet(string attKey, string val)
+    public void AttSet(string attKey, string val)
     {
         int ndx = AttIndex(attKey);
         if (ndx == -1)
@@ -419,64 +386,3 @@ public class PT_XMLHashtable
     }
 
 }
-
-/* Old XMLHashtable Class
-
-public class XMLHashtable {
-	
-	private Hashtable hash = new Hashtable();
-	
-	public XMLArrayList this[string s] {
-		get {
-			return(hash[s] as XMLArrayList);
-		}
-		set {
-			hash[s] = value;
-		}
-	}
-	
-	public string att(string s) {
-		return(hash["@"+s] as string);
-	}
-	
-	public void attSet(string s, string v) {
-		hash["@"+s] = v;
-	}
-	
-	public string text {
-		get {
-			return(hash["@"] as string);
-		}
-		set {
-			hash["@"] = value;
-		}
-	}
-	
-	public string header {
-		get {
-			return(hash["@XML_Header"] as string);
-		}
-		set {
-			hash["@XML_Header"] = value;
-		}
-	}
-	
-	public bool ContainsKey(string tag) {
-		return(hash.ContainsKey(tag));
-	}
-	
-}
-
-*/
-
-
-/*
-
-1. look for <
-2. look for next >
-3. look for / before the >
-
-
-
-*/
-

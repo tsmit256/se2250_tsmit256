@@ -14,8 +14,8 @@ public enum eScoreEvent
 
 // ScoreManager handles all of the scoring
 public class ScoreManager : MonoBehaviour
-{                 // a
-    static private ScoreManager S;                            // b
+{               
+    static private ScoreManager _S; //This is the singleton
 
     static public int SCORE_FROM_PREV_ROUND = 0;
     static public int HIGH_SCORE = 0;
@@ -28,9 +28,9 @@ public class ScoreManager : MonoBehaviour
 
     void Awake()
     {
-        if (S == null)
+        if (_S == null)
         {                                        // c
-            S = this; // Set the private singleton 
+            _S = this; // Set the private singleton 
         }
         else
         {
@@ -52,7 +52,7 @@ public class ScoreManager : MonoBehaviour
     {                  // d
         try
         { // try-catch stops an error from breaking your program 
-            S.Event(evt);
+            _S.Event(evt);
         }
         catch (System.NullReferenceException nre)
         {
@@ -108,7 +108,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    static public int CHAIN { get { return S.chain; } }             // e
-    static public int SCORE { get { return S.score; } }
-    static public int SCORE_RUN { get { return S.scoreRun; } }
+    static public int CHAIN { get { return _S.chain; } } 
+    static public int SCORE { get { return _S.score; } }
+    static public int SCORE_RUN { get { return _S.scoreRun; } }
 }

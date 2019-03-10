@@ -15,7 +15,7 @@ public class Scoreboard : MonoBehaviour
     [SerializeField] private int _score = 0;
     [SerializeField] private string _scoreString;
 
-    private Transform canvasTrans;
+    private Transform _canvasTrans;
 
     // The score property also sets the scoreString
     public int score
@@ -49,13 +49,13 @@ public class Scoreboard : MonoBehaviour
     {
         if (S == null)
         {
-            S = this; // Set the private singleton  
+            S = this; // Set the public singleton  
         }
         else
         {
             Debug.LogError("ERROR: Scoreboard.Awake(): S is already set!");
         }
-        canvasTrans = transform.parent;
+        _canvasTrans = transform.parent;
     }
 
     // When called by SendMessage, this adds the fs.score to this.score
@@ -70,7 +70,7 @@ public class Scoreboard : MonoBehaviour
     public FloatingScore CreateFloatingScore(int amt, List<Vector2> pts)
     {
         GameObject go = Instantiate<GameObject>(prefabFloatingScore);
-        go.transform.SetParent(canvasTrans);
+        go.transform.SetParent(_canvasTrans);
         FloatingScore fs = go.GetComponent<FloatingScore>();
         fs.score = amt;
         fs.reportFinishTo = this.gameObject; // Set fs to call back to this

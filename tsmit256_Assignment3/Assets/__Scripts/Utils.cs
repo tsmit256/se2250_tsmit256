@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-// This is actually OUTSIDE of the Utils Class
+
 public enum BoundsTest
 {
     center,     // Is the center of the GameObject on screen
@@ -65,21 +65,21 @@ public class Utils : MonoBehaviour
     }
 
     // Make a static read-only public property camBounds
-    static public Bounds camBounds
+    static public Bounds CAM_BOUNDS
     {
         get
         {
             // if _camBounds hasn't been set yet
-            if (_camBounds.size == Vector3.zero)
+            if (_CAM_BOUNDS.size == Vector3.zero)
             {
                 // SetCameraBounds using the default Camera
                 SetCameraBounds();
             }
-            return (_camBounds);
+            return (_CAM_BOUNDS);
         }
     }
     // This is the private static field that camBounds uses
-    static private Bounds _camBounds;
+    static private Bounds _CAM_BOUNDS;
 
     public static void SetCameraBounds(Camera cam = null)
     {
@@ -103,10 +103,10 @@ public class Utils : MonoBehaviour
 
         // Find the center of the Bounds
         Vector3 center = (boundTLN + boundBRF) / 2f;
-        _camBounds = new Bounds(center, Vector3.zero);
+        _CAM_BOUNDS = new Bounds(center, Vector3.zero);
         // Expand _camBounds to encapsulate the extents.
-        _camBounds.Encapsulate(boundTLN);
-        _camBounds.Encapsulate(boundBRF);
+        _CAM_BOUNDS.Encapsulate(boundTLN);
+        _CAM_BOUNDS.Encapsulate(boundBRF);
     }
 
 
@@ -115,7 +115,7 @@ public class Utils : MonoBehaviour
     public static Vector3 ScreenBoundsCheck(Bounds bnd, BoundsTest test = BoundsTest.center)
     {
         // Call the more generic BoundsInBoundsCheck with camBounds as bigB
-        return (BoundsInBoundsCheck(camBounds, bnd, test));
+        return (BoundsInBoundsCheck(CAM_BOUNDS, bnd, test));
     }
 
     // Tests to see whether lilB is inside bigB
@@ -345,26 +345,6 @@ public class Utils : MonoBehaviour
         return (res);
     }
 
-    /* This is the old version of this method from the first edition of the book. – JB
-	// While most Bézier curves are 3 or 4 points, it is possible to have
-	//   any number of points using this recursive function
-	// This uses the Utils.Lerp function because it needs to allow extrapolation
-	static public Vector3 Bezier( float u, List<Vector3> vList ) {
-		// If there is only one element in vList, return it
-		if (vList.Count == 1) {
-			return( vList[0] );
-		}
-		// Otherwise, create vListR, which is all but the 0th element of vList
-		// e.g. if vList = [0,1,2,3,4] then vListR = [1,2,3,4]
-		List<Vector3> vListR =  vList.GetRange(1, vList.Count-1);
-		// And create vListL, which is all but the last element of vList
-		// e.g. if vList = [0,1,2,3,4] then vListL = [0,1,2,3]
-		List<Vector3> vListL = vList.GetRange(0, vList.Count-1);
-		// The result is the Lerp of these two shorter Lists
-		Vector3 res = Lerp( Bezier(u, vListL), Bezier(u, vListR), u );
-		return( res );
-	}
-    */
 
     // This version allows an Array or a series of Vector3s as input
     static public Vector3 Bezier(float u, params Vector3[] vecs)
@@ -469,7 +449,7 @@ public class Utils : MonoBehaviour
 
     //============================ Trace & Logging Functions ============================
 
-    static public void tr(params object[] objs)
+    static public void TraceAndLogging(params object[] objs)
     {
         string s = objs[0].ToString();
         for (int i = 1; i < objs.Length; i++)
@@ -516,7 +496,6 @@ public class Utils : MonoBehaviour
             {
                 rems = "0" + rems;
             }
-            // TODO: I think there must be a faster way to concatenate strings. Maybe I could do this with an array or something
             if (res == "")
             {
                 res = rems;

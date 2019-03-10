@@ -7,7 +7,7 @@ public class Card : MonoBehaviour
     // This will be defined later
     [Header("Set Dynamically")]
     public string suit; // Suit of the Card (C,D,H, or S)
-    public int rank; // Rank of the Card (1-14)
+    public int rank; // Rank of the Card (1-13)
     public Color color = Color.black; // Color to tint pips
     public string colS = "Black"; // or "Red". Name of the Color
 
@@ -99,7 +99,7 @@ public class Card : MonoBehaviour
     }
 }
 
-[System.Serializable] // A Serializable class is able to be edited in the Inspector
+[System.Serializable]
 public class Decorator
 {
     // This class stores information about each decorator or pip from DeckXML
@@ -115,5 +115,5 @@ public class CardDefinition
     // This class stores information for each rank of card
     public string face; // Sprite to use for each face card
     public int rank; // The rank (1-13) of this card
-    public List<Decorator> pips = new List<Decorator>(); // Pips used    // a
+    public List<Decorator> pips = new List<Decorator>();
 }

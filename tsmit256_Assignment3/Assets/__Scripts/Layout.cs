@@ -2,22 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// The SlotDef class is not a subclass of MonoBehaviour, so it doesn't need
-//   a separate C# file.
-[System.Serializable] // This makes SlotDefs visible in the Unity Inspector pane
-public class SlotDef
-{
-    public float x;
-    public float y;
-    public bool faceUp = false;
-    public string layerName = "Default";
-    public int layerID = 0;
-    public int id;
-    public List<int> hiddenBy = new List<int>();
-    public string type = "slot";
-    public Vector2 stagger;
-}
-
 public class Layout : MonoBehaviour
 {
     public PT_XMLReader xmlr; // Just like Deck, this has a PT_XMLReader
@@ -39,8 +23,8 @@ public class Layout : MonoBehaviour
         xml = xmlr.xml["xml"][0]; // And xml is set as a shortcut to the XML
 
         // Read in the multiplier, which sets card spacing
-        multiplier.x = float.Parse(xml["multiplier"][0].att("x"));
-        multiplier.y = float.Parse(xml["multiplier"][0].att("y"));
+        multiplier.x = float.Parse(xml["multiplier"][0].Att("x"));
+        multiplier.y = float.Parse(xml["multiplier"][0].Att("y"));
 
         // Read in the slots
         SlotDef tSD;
@@ -52,30 +36,30 @@ public class Layout : MonoBehaviour
             tSD = new SlotDef(); // Create a new SlotDef instance
             if (slotsX[i].HasAtt("type"))
             {
-                // If this <slot> has a type attribute parse it
-                tSD.type = slotsX[i].att("type");
+                // If this <slot> has a type Attribute parse it
+                tSD.type = slotsX[i].Att("type");
             }
             else
             {
                 // If not, set its type to "slot"; it's a card in the rows
                 tSD.type = "slot";
             }
-            // Various attributes are parsed into numerical values
-            tSD.x = float.Parse(slotsX[i].att("x"));
-            tSD.y = float.Parse(slotsX[i].att("y"));
-            tSD.layerID = int.Parse(slotsX[i].att("layer"));
+            // Various Attributes are parsed into numerical values
+            tSD.x = float.Parse(slotsX[i].Att("x"));
+            tSD.y = float.Parse(slotsX[i].Att("y"));
+            tSD.layerID = int.Parse(slotsX[i].Att("layer"));
             // This converts the number of the layerID into a text layerName     
             tSD.layerName = sortingLayerNames[tSD.layerID];              // a
 
             switch (tSD.type)
             {
-                // pull additional attributes based on the type of this <slot>
+                // pull additional Attributes based on the type of this <slot>
                 case "slot":
-                    tSD.faceUp = (slotsX[i].att("faceup") == "1");
-                    tSD.id = int.Parse(slotsX[i].att("id"));
+                    tSD.faceUp = (slotsX[i].Att("faceup") == "1");
+                    tSD.id = int.Parse(slotsX[i].Att("id"));
                     if (slotsX[i].HasAtt("hiddenby"))
                     {
-                        string[] hiding = slotsX[i].att("hiddenby").Split(',');
+                        string[] hiding = slotsX[i].Att("hiddenby").Split(',');
                         foreach (string s in hiding)
                         {
                             tSD.hiddenBy.Add(int.Parse(s));
@@ -85,7 +69,7 @@ public class Layout : MonoBehaviour
                     break;
 
                 case "drawpile":
-                    tSD.stagger.x = float.Parse(slotsX[i].att("xstagger"));
+                    tSD.stagger.x = float.Parse(slotsX[i].Att("xstagger"));
                     drawPile = tSD;
                     break;
                 case "discardpile":

@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class Prospector : MonoBehaviour
 {
-    static public Prospector S;
-    private ScoreManager SM = new ScoreManager();
+    static public Prospector S; //This is a singleton for Prospector script
+    private ScoreManager _SM;
 
     [Header("Set in Inspector")]
     public TextAsset deckXML;
@@ -40,6 +40,7 @@ public class Prospector : MonoBehaviour
     void Awake()
     {
         S = this; // Set up a Singleton for Prospector
+        _SM = GameObject.Find("_MainCamera").GetComponent<ScoreManager>();
         SetUpUITexts();
     }
 
@@ -47,7 +48,6 @@ public class Prospector : MonoBehaviour
     {
 
         //Ensure that there isnt any previous scores
-
         if (PlayerPrefs.GetInt("ProspectorGames") != 1)
         {
             PlayerPrefs.SetInt("ProspectorGames", 1);
@@ -122,8 +122,8 @@ public class Prospector : MonoBehaviour
         }
         // Reload the scene in reloadDelay seconds
         // This will give the score a moment to travel
-        Invoke("ReloadLevel", reloadDelay);                                 // a
-                                                                            // SceneManager.LoadScene("__Prospector_Scene_0"); // Now commented out!
+        Invoke("ReloadLevel", reloadDelay);              
+                                                                           
     }
 
     void Start()
@@ -132,11 +132,6 @@ public class Prospector : MonoBehaviour
         deck = GetComponent<Deck>(); // Get the Deck
         deck.InitDeck(deckXML.text); // Pass DeckXML to it
 
-        //		Card c;
-        //		for (int cNum=0; cNum<deck.cards.Count; cNum++) {                    // b
-        //			c = deck.cards[cNum];
-        //			c.transform.localPosition = new Vector3( (cNum%13)*3, cNum/13*4, 0 );
-        //		}
         layout = GetComponent<Layout>();  // Get the Layout component
         layout.ReadLayout(layoutXML.text); // Pass LayoutXML to it
         drawPile = ConvertListCardsToListCardProspectors(deck.cards);
@@ -149,7 +144,7 @@ public class Prospector : MonoBehaviour
         CardProspector tCP;
         foreach (Card tCD in lCD)
         {
-            tCP = tCD as CardProspector;                   // a
+            tCP = tCD as CardProspector;            
             lCP.Add(tCP);
         }
         return (lCP);
@@ -168,17 +163,15 @@ public class Prospector : MonoBehaviour
         // Create an empty GameObject to serve as an anchor for the tableau // a
         if (layoutAnchor == null)
         {
-            GameObject tGO = new GameObject("_LayoutAnchor");
-            // ^ Create an empty GameObject named _LayoutAnchor in the Hierarchy
+            GameObject tGO = new GameObject("_LayoutAnchor"); //Create an empty GameObject named _LayoutAnchor in the Hierarchy
             layoutAnchor = tGO.transform;              // Grab its Transform
             layoutAnchor.transform.position = layoutCenter;   // Position it
         }
 
         CardProspector cp;
-        // Follow the layout
+        // Iterate through all the SlotDefs in the layout.slotDefs as tSD
         foreach (SlotDef tSD in layout.slotDefs)
         {
-            // ^ Iterate through all the SlotDefs in the layout.slotDefs as tSD
             cp = Draw(); // Pull a card from the top (beginning) of the draw Pile
             cp.faceUp = tSD.faceUp;  // Set its faceUp to the value in SlotDef
             cp.transform.parent = layoutAnchor; // Make its parent layoutAnchor
@@ -288,6 +281,7 @@ public class Prospector : MonoBehaviour
                           // Set the depth sorting
         cd.SetSortingLayerName(layout.discardPile.layerName);
         cd.SetSortOrder(0);
+        print("The name of the new target is:" + target.name);
     }
 
     // Arranges all the cards of the drawPile to show how many are left
@@ -322,13 +316,12 @@ public class Prospector : MonoBehaviour
         switch (cd.state)
         {
             case eCardState.drawpile:
-                break;
-            case eCardState.target:
                 // Clicking any card in the drawPile will draw the next card
                 MoveToDiscard(target); // Moves the target to the discardPile
                 MoveToTarget(Draw());  // Moves the next drawn card to the target
                 UpdateDrawPile();     // Restacks the drawPile
-
+                break;
+            case eCardState.target:
                 break;
 
             case eCardState.tableau:
@@ -339,9 +332,9 @@ public class Prospector : MonoBehaviour
                     // If the card is face-down, it's not valid
                     validMatch = false;
                 }
-                if (!AdjacentRank(cd, target))
+                if (!AdjacentRank(cd, target) || !AlternatingColour(cd,target))
                 {
-                    // If it's not an adjacent rank, it's not valid
+                    // If it's not an adjacent rank or colour is not alternating, it's not valid
                     validMatch = false;
                 }
                 if (!validMatch) return; // return if not valid
@@ -350,7 +343,7 @@ public class Prospector : MonoBehaviour
                 tableau.Remove(cd); // Remove it from the tableau List
                 MoveToTarget(cd);  // Make it the target card
                 SetTableauFaces(); // Update tableau card face-ups 
-                SM.Event(eScoreEvent.mine);
+                _SM.Event(eScoreEvent.mine);
                 FloatingScoreHandler(eScoreEvent.mine);
                 break;
         }
@@ -379,7 +372,7 @@ public class Prospector : MonoBehaviour
         // Check for remaining valid plays
         foreach (CardProspector cd in tableau)
         {
-            if (AdjacentRank(cd, target))
+            if (AdjacentRank(cd, target) && AlternatingColour(cd,target))
             {
                 // If there is a valid play, the game's not over
                 return;
@@ -415,6 +408,20 @@ public class Prospector : MonoBehaviour
 
         // Otherwise, return false
         return (false);
+    }
+
+    //Returns true if the two cards are of different colour
+    public bool AlternatingColour(CardProspector c0, CardProspector c1)
+    {
+        // If either card is face-down, it's not alternating.
+        if (!c0.faceUp || !c1.faceUp) return (false);
+
+        //If one is red and the other is black, return true
+        if (c0.colS == "Red" && c1.colS == "Black") return true;
+        if (c0.colS == "Black" && c1.colS == "Red") return true;
+
+        //Otherwise, return false
+        return false;
     }
 
     // Handle FloatingScore movement
