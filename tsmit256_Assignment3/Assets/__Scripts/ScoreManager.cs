@@ -40,7 +40,7 @@ public class ScoreManager : MonoBehaviour
         // Check for a high score in PlayerPrefs
         if (PlayerPrefs.HasKey("ProspectorHighScore"))
         {
-            HIGH_SCORE = PlayerPrefs.GetInt("ProspectorHighScore");
+           HIGH_SCORE = PlayerPrefs.GetInt("ProspectorHighScore");
         }
         // Add the score from last round, which will be >0 if it was a win
         score += SCORE_FROM_PREV_ROUND;
@@ -90,6 +90,7 @@ public class ScoreManager : MonoBehaviour
 
             case eScoreEvent.gameLoss:
                 // If it's a loss, check against the high score
+                print("HIGH SCORE IS: " + HIGH_SCORE);
                 if (HIGH_SCORE <= score)
                 {
                     print("You got the high score! High score: " + score);

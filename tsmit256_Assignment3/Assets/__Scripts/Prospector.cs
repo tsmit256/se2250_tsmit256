@@ -98,7 +98,6 @@ public class Prospector : MonoBehaviour
             gameOverText.text = "Round Over";
             roundResultText.text = "You won this round!\nRound Score: " + score;
             ShowResultsUI(true);
-            // print ("Game Over. You won! :)");  // Comment out this line
             ScoreManager.EVENT(eScoreEvent.gameWin);
             FloatingScoreHandler(eScoreEvent.gameWin);
 
@@ -116,10 +115,10 @@ public class Prospector : MonoBehaviour
                 roundResultText.text = "Your final score was: " + score;
             }
             ShowResultsUI(true);
-            // print ("Game Over. You Lost. :("); // Comment out this line
             ScoreManager.EVENT(eScoreEvent.gameLoss);
             FloatingScoreHandler(eScoreEvent.gameLoss);
         }
+        SocialMediaHandler.ShareTweet();
         // Reload the scene in reloadDelay seconds
         // This will give the score a moment to travel
         Invoke("ReloadLevel", reloadDelay);              

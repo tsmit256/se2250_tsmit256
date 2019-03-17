@@ -140,7 +140,7 @@ public class Deck : MonoBehaviour
         }
     }
 
-    // Get the proper CardDefinition based on Rank (1 to 14 is Ace to King)
+    // Get the proper CardDefinition based on Rank (1 to 13 is Ace to King)
     public CardDefinition GetCardDefinitionByRank(int rnk)
     {
         // Search through all of the CardDefinitions
