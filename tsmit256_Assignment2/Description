@@ -1,0 +1,14 @@
+Created a simple 3D game where a player collects cubes by rolling a ball. 
+Red ball represents a player and the cubes represent the pickup objects. 
+
+Feature Requirements:
+1. The player rolls the ball within the box by pressing the arrow keys.
+2. When the ball hits the wall of the box, it should bounce back like a real ball rolled against the wall.
+3. The ball must remain in the box and not bounce out of the box.
+4. Eight or more pickup objects (squares in the figure) should be located just above the box. They should differ in colour.
+5. All pickup objects should be created from the script
+6. There should only be one pickup asset in the project.
+7. When the ball hits a pickup object, the pickup object must disappear and the score must increase.
+8. Display the score in the upper right corner.
+9. Collecting different colour cubes must result in different point gains. 
+10. Use ‘property’ to handle points for pickup object. 
