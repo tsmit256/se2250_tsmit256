@@ -1,0 +1,13 @@
+Goal: Explore Unity limitations and integration with other systems/software - primarily social media.
+
+Feature Requirements for Prospector Solitaire Game:
+1. Clicking on the draw pile (the pile in the right, upper corner) must result in taking
+the next card from the draw pile and putting it on the target pile (the pile in the middle
+where the cards are ordered). 
+2. Clicking on the target pile should not do anything.
+3. The game must start with random order of cards in the deck.
+4. Ensure that the cards are of alternating color for a move to be accepted.
+5. Print to console the cards name (H10 for 10 of Hearts is sufficient) of the target as it changes.
+6. Integrate Unity with one of the social media platforms by providing the ability to share game score. 
+The process can be integrated with a web browser
+7. High score must be saved after each game session is stopped.
